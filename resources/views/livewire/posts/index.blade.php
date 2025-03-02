@@ -25,12 +25,14 @@
                     </a>
                 </div>
 
-                @if($isOpenCreate)
-                @include('livewire.posts.create')
-                @endif
-
-                @if($isOpenEdit)
-                @include('livewire.posts.edit')
+                @if($isOpenCreateOrEdit)
+                    @if($mode === 'create')
+                        @include('livewire.posts.create')
+                    @elseif($mode === 'edit')
+                        @include('livewire.posts.edit')
+                    @elseif($mode === 'show')
+                        @include('livewire.posts.show')
+                    @endif
                 @endif
 
                 {{--Gropu of Searchbar and Filter--}}
@@ -76,8 +78,13 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-wrap">{{ $post->content }}</div>
                                 </td>
+                                <td>
+                                    @if ($post->image)
+                                        <img src="{{ asset('storage/post_img/' . $post->image) }}" class="w-20 h-20 object-cover" alt="Current Image">
+                                    @endif
+                                </td>
                                 <td class="flex flex-row px-6 py-4 whitespace-nowrap">
-                                    <button class="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    <button wire:click="postShow({{$post->id}})" class="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                         Show
                                     </button><button wire:click="postEdit({{$post->id}})" class="mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                                         Edit
