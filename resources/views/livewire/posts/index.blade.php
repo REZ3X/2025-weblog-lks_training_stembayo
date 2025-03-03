@@ -19,11 +19,14 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 {{--Button div new post--}}
+
+                @can('create posts')
                 <div wire:click="postCreate()" class="flex justify-start cursor-pointer px-4 py-3">
                     <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Create a New Post
                     </a>
                 </div>
+                @endcan
 
                 @if($isOpenCreateOrEdit)
                     @if($mode === 'create')
@@ -84,13 +87,21 @@
                                     @endif
                                 </td>
                                 <td class="flex flex-row px-6 py-4 whitespace-nowrap">
+                                    @can('view posts')
                                     <button wire:click="postShow({{$post->id}})" class="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                         Show
-                                    </button><button wire:click="postEdit({{$post->id}})" class="mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                                    </button>
+                                    @endcan
+                                    @can('edit posts')
+                                    <button wire:click="postEdit({{$post->id}})" class="mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                                         Edit
-                                    </button><button wire:click="postDelete({{$post->id}})" class="mr-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                    </button>
+                                    @endcan
+                                    @can('delete posts')
+                                    <button wire:click="postDelete({{$post->id}})" class="mr-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                                         Delete
                                     </button>
+                                    @endcan
                                 </td>
                             </tr>
                             @endforeach

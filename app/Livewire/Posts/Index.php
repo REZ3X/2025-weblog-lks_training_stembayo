@@ -36,6 +36,11 @@ class Index extends Component
 
     public function postCreate()
     {
+        if (!auth()->user()->can('create posts')) {
+            session()->flash('error', 'You do not have permission to create a post.');
+            return;
+        }
+
         $this->resetInputFields();
         $this->mode = 'create';
         $this->openModalCreateOrEdit();
@@ -100,6 +105,11 @@ public function postStore()
 }
 public function postEdit($id)
 {
+    if (!auth()->user()->can('edit posts')) {
+        session()->flash('error', 'You do not have permission to edit a post.');
+        return;
+    }
+
     $post = Post::findOrFail($id);
     $this->postId = $id;
     $this->postTitle = $post->title;
@@ -111,6 +121,11 @@ public function postEdit($id)
 
     public function postDelete($id)
     {
+        if (!auth()->user()->can('delete posts')) {
+            session()->flash('error', 'You do not have permission to delete a post.');
+            return;
+        }
+
         Post::find($id)->delete();
         session()->flash('message', 'Post Deleted Successfully.');
     }
