@@ -12,22 +12,16 @@ class RoleAndPermissionSeeder extends Seeder
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $permissions = [
-            'view posts',
-            'create posts',
-            'edit posts',
-            'delete posts',
-            'user manage'
-        ];
+        Permission::create(['name' => 'show posts']);
+        Permission::create(['name' => 'view posts']);
+        Permission::create(['name' => 'create posts']);
+        Permission::create(['name' => 'edit posts']);
+        Permission::create(['name' => 'delete posts']);
 
-        foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission, 'guard_name' => 'web']);
-        }
+        $userRole = Role::create(['name' => 'user']);
+        $userRole->givePermissionTo('view posts');
 
-        $userRole = Role::firstOrCreate(['name' => 'user', 'guard_name' => 'web']);
-        $userRole->givePermissionTo(['view posts']);
-
-        $adminRole = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
-        $adminRole->syncPermissions($permissions);
+        $adminRole = Role::create(['name' => 'admin']);
+        $adminRole->givePermissionTo(Permission::all());
     }
 }

@@ -22,14 +22,6 @@
                         {{ __('Posts') }}
                     </x-nav-link>
                 </div>
-
-                @can('user manage')
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')">
-                            {{ __('Users') }}
-                        </x-nav-link>
-                    </div>
-                @endcan
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -97,8 +89,6 @@
                                 <span class="inline-flex rounded-md">
                                     <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
                                         {{ Auth::user()->name }}
-                                        |
-                                        {{Auth::user()->roles->pluck('name')->first()}}
 
                                         <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -112,11 +102,6 @@
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 {{ __('Manage Account') }}
-                            </div>
-                            <div class="border-t border-gray-100">
-                                <div class="block px-4 py-2 text-xs text-gray-600">
-                                    {{ Auth::user()->roles->pluck('name')->first() }}
-                                </div>
                             </div>
 
                             <x-dropdown-link href="{{ route('profile.show') }}">

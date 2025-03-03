@@ -16,5 +16,4 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('/posts',App\Livewire\Posts\Index::class)->name('posts.index');
-    Route::get('/users',App\Livewire\Users\Index::class)->name('users.index');
 });
